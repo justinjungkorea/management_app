@@ -59,25 +59,30 @@ class App extends Component{
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
+
           <TableHead>
             <TableRow>
               <TableCell>번호</TableCell>
               <TableCell>이미지</TableCell>
               <TableCell>이름</TableCell>
               <TableCell>성별</TableCell>
+              <TableCell>직업</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {this.state.customers ? this.state.customers.map(temp => { 
-              return (<Customer key={temp.id} id={temp.id} image={temp.image} name={temp.name} gender={temp.gender} />)
+            {this.state.customers ? 
+            this.state.customers.map(temp => { 
+              return (<Customer key={temp._id} id={temp._id} image={temp.image} name={temp.name} gender={temp.gender} job={temp.job}/>)
               }) : 
               <TableRow>
-                <TableCell colSpan="4" align="center">
+                <TableCell colSpan="5" align="center">
                   <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
                 </TableCell>
               </TableRow>
             }
           </TableBody>
+
         </Table>
       </Paper>
     );
