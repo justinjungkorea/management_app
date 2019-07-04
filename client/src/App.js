@@ -77,13 +77,16 @@ class App extends Component{
                 <TableCell>이름</TableCell>
                 <TableCell>성별</TableCell>
                 <TableCell>직업</TableCell>
+                <TableCell>설정</TableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
               {this.state.customers ? 
               this.state.customers.map(temp => { 
-                return (<Customer key={temp._id} id={temp._id} image={temp.image} name={temp.name} gender={temp.gender} job={temp.job}/>)
+                return (
+                  <Customer stateRefresh={this.stateRefresh} key={temp._id} id={temp._id} image={temp.image} name={temp.name} gender={temp.gender} job={temp.job}/>
+                  )
                 }) : 
                 <TableRow>
                   <TableCell colSpan="5" align="center">

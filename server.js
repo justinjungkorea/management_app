@@ -28,19 +28,27 @@ const upload = multer({
 
 
 app.get('/api/customers', (req,res)=>{
-    connection.query("select * from customer", (err, rows, fields)=>{
+    connection.query("select * from customer where isDeleted=0", (err, rows, fields)=>{
         res.send(rows);
     })
 });
 
 app.use('/image', express.static('./upload'));
 app.post('/api/customers', upload.single('image'), (req, res) => {
-    let sql = 'Insert into customer values (null, ?, ?, ?, ?)';
+    let sql = 'Insert into customer values (null, ?, ?, ?, ?, now(), 0)';
     let image = '/image/' + req.file.filename;
     let name = req.body.name;
     let gender = req.body.gender;
     let job = req.body.job;
     let params = [image, name, gender, job];
+    connection.query(sql, params, (err, rows, fields) => {
+        res.send(rows);
+    })
+});
+
+app.delete('/api/customers/:id', (req,res)=>{
+    let sql = 'UPDATE customer SET isDeleted = 1 WHERE _id = ?';
+    let params = [req.params.id];
     connection.query(sql, params, (err, rows, fields) => {
         res.send(rows);
     })
