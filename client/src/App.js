@@ -15,9 +15,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import Container from '@material-ui/core/Container';
 
 const styles = theme => ({
   root: {
@@ -150,47 +151,49 @@ class App extends Component{
     }
     return (
       <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
-            </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
-              고객 관리 시스템
-            </Typography>
-              <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+        <Container>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Open drawer">
+                <MenuIcon />
+              </IconButton>
+              <Typography className={classes.title} variant="h6" noWrap>
+                고객 관리 시스템
+              </Typography>
+                <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase placeholder="검색하기" classes={{root: classes.inputRoot,input: classes.inputInput,}} 
+                inputProps={{ 'aria-label': 'Search' }} name="searchKeyword" value={this.state.searchKeyword} onChange={this.handleValueChange}/>
               </div>
-              <InputBase placeholder="검색하기" classes={{root: classes.inputRoot,input: classes.inputInput,}} 
-              inputProps={{ 'aria-label': 'Search' }} name="searchKeyword" value={this.state.searchKeyword} onChange={this.handleValueChange}/>
-            </div>
-          </Toolbar>
-        </AppBar>
-        <div className={classes.menu}>
-          <CustomerAdd stateRefresh={this.stateRefresh}/>
-        </div>
-        <Paper className={classes.paper}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                {cellList.map(temp => {
-                  return <TableCell className={classes.tableHead} >{temp}</TableCell>
-                })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.customers ? filteredComponents(this.state.customers) : 
+            </Toolbar>
+          </AppBar>
+          <div className={classes.menu}>
+            <CustomerAdd stateRefresh={this.stateRefresh}/>
+          </div>
+          <Paper className={classes.paper}>
+            <Table className={classes.table}>
+              <TableHead>
                 <TableRow>
-                  <TableCell colSpan="5" align="center">
-                    <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
-                  </TableCell>
+                  {cellList.map(temp => {
+                    return <TableCell className={classes.tableHead} >{temp}</TableCell>
+                  })}
                 </TableRow>
-              }
-            </TableBody>
+              </TableHead>
+              <TableBody>
+                {this.state.customers ? filteredComponents(this.state.customers) : 
+                  <TableRow>
+                    <TableCell colSpan="5" align="center">
+                      <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
+                    </TableCell>
+                  </TableRow>
+                }
+              </TableBody>
 
-          </Table>
-        </Paper>
+            </Table>
+          </Paper>
+        </Container>
         
       </div>
     );
